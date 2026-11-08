@@ -1,0 +1,26 @@
+# Python cache and local environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Test and tool caches
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.mimosa/
+
+# Local exam output
+*/web_exam/records/*
+!*/web_exam/records/.gitkeep
+
+# Local logs and editor metadata
+*.log
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+Desktop.ini
