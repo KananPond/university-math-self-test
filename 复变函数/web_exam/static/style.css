@@ -1,0 +1,929 @@
+/* ==========================================================================
+ * 复变函数考试模拟系统 · 样式
+ * 作者：ZCode（GLM）    日期：2026-11-08    版本：1.0
+ * ========================================================================== */
+
+:root {
+    --ink: #0f172a;
+    --ink-soft: #475569;
+    --line: #e2e8f0;
+    --paper: #ffffff;
+    --bg: #f1f5f9;
+    --brand: #2563eb;
+    --brand-dark: #1d4ed8;
+    --ok: #16a34a;
+    --bad: #dc2626;
+    --warn: #d97706;
+    --teal: #2f6f5e;
+    --warm: #c97b3f;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+}
+
+button {
+    font-family: inherit;
+}
+
+code {
+    font-family: "Cambria Math", "JetBrains Mono", Consolas, monospace;
+}
+
+/* ---------------- 顶栏 ---------------- */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 20px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.topbar .subtitle {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: var(--ink-soft);
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.service-state {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ink-soft);
+}
+
+.service-state .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #94a3b8;
+}
+
+.service-state.online .dot {
+    background: var(--ok);
+}
+
+.service-state.offline .dot {
+    background: var(--bad);
+}
+
+.timer {
+    font-variant-numeric: tabular-nums;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 8px;
+    background: #eef2ff;
+    color: #3730a3;
+}
+
+.timer.danger {
+    background: #fef2f2;
+    color: var(--bad);
+}
+
+.viz-link {
+    font-size: 13px;
+    color: var(--brand);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 5px 10px;
+    background: var(--paper);
+    white-space: nowrap;
+}
+
+.viz-link:hover {
+    background: #eff6ff;
+}
+
+.viz-link.warm {
+    color: var(--warm);
+    border-color: #e8d5c3;
+}
+
+.viz-link.warm:hover {
+    background: #fdf6f0;
+}
+
+/* ---------------- 按钮 ---------------- */
+
+.btn {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.btn-primary {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: var(--brand-dark);
+    border-color: var(--brand-dark);
+}
+
+.btn-ghost {
+    margin-top: 10px;
+    color: var(--teal);
+    border-color: #cfe0da;
+}
+
+.btn-ghost:hover {
+    background: #f0f7f5;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.btn-choice {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    margin: 6px 0;
+    border-radius: 10px;
+}
+
+.btn-choice.selected {
+    border-color: var(--brand);
+    background: #eff6ff;
+    box-shadow: inset 0 0 0 1px var(--brand);
+}
+
+.btn-judge {
+    min-width: 96px;
+    margin-right: 10px;
+}
+
+.btn-judge.selected-right {
+    border-color: var(--ok);
+    background: #f0fdf4;
+    box-shadow: inset 0 0 0 1px var(--ok);
+}
+
+.btn-judge.selected-wrong {
+    border-color: var(--bad);
+    background: #fef2f2;
+    box-shadow: inset 0 0 0 1px var(--bad);
+}
+
+/* ---------------- 布局 ---------------- */
+
+.progress-track {
+    height: 3px;
+    background: var(--line);
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    background: var(--brand);
+    transition: width 0.3s;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 18px;
+    max-width: 1180px;
+    margin: 18px auto;
+    padding: 0 16px;
+}
+
+@media (max-width: 860px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.panel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.panel-title {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+}
+
+.score-panel {
+    text-align: center;
+}
+
+.score-value {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.score-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+}
+
+.score-sub {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--ink-soft);
+}
+
+.progress-text {
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.progress-track.thin {
+    height: 6px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.nav-panel #nav .nav-group {
+    margin-bottom: 10px;
+}
+
+.nav-group-title {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin: 0 0 4px;
+}
+
+.nav-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.nav-item {
+    min-width: 34px;
+    padding: 3px 6px;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.nav-item.answered {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: var(--brand-dark);
+    font-weight: 700;
+}
+
+.nav-item.current {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 1px var(--brand);
+}
+
+.hint {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin: 6px 0 0;
+    word-break: break-all;
+}
+
+/* ---------------- 试卷 ---------------- */
+
+.paper {
+    min-width: 0;
+}
+
+.paper-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.notice {
+    background: #fffbeb;
+    border-color: #fde68a;
+}
+
+.notice ol {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 13px;
+}
+
+.landing {
+    text-align: center;
+    padding: 48px 20px;
+}
+
+.landing h2 {
+    margin: 0 0 10px;
+}
+
+.landing .meta {
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+}
+
+.section-block {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 22px;
+}
+
+.section-head {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+    margin-bottom: 6px;
+}
+
+.section-head h2 {
+    margin: 0;
+    font-size: 17px;
+}
+
+.section-head p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+}
+
+.question {
+    padding: 14px 4px;
+    border-bottom: 1px dashed var(--line);
+}
+
+.question:last-child {
+    border-bottom: none;
+}
+
+.question-head {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+}
+
+.q-no {
+    flex: none;
+    font-weight: 800;
+    color: var(--brand-dark);
+}
+
+.q-stem {
+    flex: 1;
+    min-width: 0;
+}
+
+.q-stem code {
+    background: #f1f5f9;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+}
+
+.q-kp {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 1px 8px;
+    font-size: 11px;
+    color: var(--teal);
+    background: rgba(47, 111, 94, 0.09);
+    border-radius: 999px;
+}
+
+.q-body {
+    margin-top: 10px;
+    padding-left: 34px;
+}
+
+.options {
+    display: grid;
+    gap: 8px;
+}
+
+.option-label {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.option-letter {
+    flex: none;
+    font-weight: 700;
+}
+
+.fill-input {
+    width: min(320px, 100%);
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: "Cambria Math", Georgia, serif;
+}
+
+.fill-input:focus {
+    outline: 2px solid #bfdbfe;
+    border-color: var(--brand);
+}
+
+/* ---------------- 复平面图形 ---------------- */
+
+.cv-figure {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 8px 12px 8px 0;
+}
+
+.cv-canvas {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fbfdff;
+}
+
+.cv-tip {
+    position: absolute;
+    z-index: 5;
+    top: -32px;
+    left: 0;
+    padding: 2px 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+.cv-figure-box {
+    display: inline-block;
+}
+
+/* ---------------- 计算题作答 ---------------- */
+
+.cv-answer {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.cv-answer-title {
+    margin: 0 0 6px;
+    font-size: 12px;
+    color: var(--ink-soft);
+}
+
+.cv-blank-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.cv-blank-label {
+    flex: none;
+    width: 132px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: right;
+}
+
+.cv-blank-input {
+    width: 190px;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: "Cambria Math", Georgia, serif;
+}
+
+.cv-blank-input:focus {
+    outline: 2px solid #bfdbfe;
+    border-color: var(--brand);
+}
+
+.cv-preview-box {
+    padding: 6px;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    background: #fafcff;
+    min-height: 60px;
+}
+
+.cv-preview-hint {
+    margin: 0;
+    padding: 10px 8px;
+    font-size: 12px;
+    color: var(--ink-soft);
+}
+
+/* ---------------- 成绩单弹窗 ---------------- */
+
+.modal-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(15, 23, 42, 0.55);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 16px;
+    overflow: auto;
+}
+
+.modal-mask[hidden] {
+    display: none;
+}
+
+.modal {
+    width: min(860px, 100%);
+    background: var(--paper);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+.modal-head h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.modal-close {
+    border: none;
+    background: none;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ink-soft);
+}
+
+.modal-body {
+    padding: 18px 20px;
+    max-height: 62vh;
+    overflow: auto;
+}
+
+.result-hero {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.result-score {
+    font-size: 56px;
+    font-weight: 800;
+}
+
+.result-total {
+    color: var(--ink-soft);
+}
+
+.result-comment {
+    margin-top: 4px;
+    color: var(--ink-soft);
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.result-table th,
+.result-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 6px 8px;
+    text-align: left;
+}
+
+.result-table .good {
+    color: var(--ok);
+    font-weight: 700;
+}
+
+.result-table .bad {
+    color: var(--bad);
+    font-weight: 700;
+}
+
+.q-explain {
+    margin: 4px 0 10px;
+}
+
+.q-explain summary {
+    cursor: pointer;
+    color: var(--brand-dark);
+    font-size: 13px;
+}
+
+.q-explain .explain-body {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.modal-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--line);
+}
+
+.footer-note {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 12px;
+    padding: 18px 0 26px;
+}
+
+/* ---------------- 闪电训练 ---------------- */
+
+.drill-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 18px;
+    max-width: 1080px;
+    margin: 18px auto;
+    padding: 0 16px;
+}
+
+@media (max-width: 860px) {
+    .drill-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.drill-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 22px;
+}
+
+.drill-stem {
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 4px;
+}
+
+.drill-stem code {
+    background: #f1f5f9;
+    border-radius: 4px;
+    padding: 1px 6px;
+}
+
+.drill-figure {
+    margin: 12px 0;
+}
+
+.drill-input {
+    width: min(320px, 100%);
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: "Cambria Math", Georgia, serif;
+}
+
+.drill-input:focus {
+    outline: 2px solid #bfdbfe;
+    border-color: var(--brand);
+}
+
+.drill-input.wrong {
+    border-color: var(--bad);
+    background: #fef2f2;
+}
+
+.drill-input.right {
+    border-color: var(--ok);
+    background: #f0fdf4;
+}
+
+.drill-feedback {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #f8fafc;
+    font-size: 14px;
+}
+
+.drill-feedback.good {
+    border-color: #bbf7d0;
+    background: #f0fdf4;
+}
+
+.drill-feedback.bad {
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+
+.drill-feedback .verdict {
+    font-weight: 800;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.drill-feedback .verdict.good {
+    color: var(--ok);
+}
+
+.drill-feedback .verdict.bad {
+    color: var(--bad);
+}
+
+.drill-feedback .expected {
+    font-family: "Cambria Math", Georgia, serif;
+    font-size: 15px;
+}
+
+.drill-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.kp-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.kp-chip {
+    font-size: 12px;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+    cursor: pointer;
+    color: var(--ink-soft);
+}
+
+.kp-chip.on {
+    border-color: var(--teal);
+    background: rgba(47, 111, 94, 0.09);
+    color: var(--teal);
+    font-weight: 600;
+}
+
+.mastery-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+.mastery-name {
+    flex: none;
+    width: 82px;
+    color: var(--ink-soft);
+}
+
+.mastery-bar {
+    flex: 1;
+    height: 7px;
+    border-radius: 4px;
+    background: #eef2f7;
+    overflow: hidden;
+}
+
+.mastery-fill {
+    height: 100%;
+    background: var(--teal);
+    border-radius: 4px;
+}
+
+.mastery-fill.low {
+    background: var(--warn);
+}
+
+.mastery-count {
+    flex: none;
+    width: 56px;
+    text-align: right;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+}
+
+.drill-stats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.drill-stat {
+    flex: 1;
+    min-width: 92px;
+    text-align: center;
+    padding: 10px 6px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fbfdff;
+}
+
+.drill-stat .num {
+    font-size: 24px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.drill-stat .cap {
+    font-size: 11px;
+    color: var(--ink-soft);
+}
+
+.streak {
+    font-weight: 700;
+    color: var(--warm);
+}
+
+.qmark-row {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.qmark {
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: #e2e8f0;
+}
+
+.qmark.hit {
+    background: var(--ok);
+}
+
+.qmark.miss {
+    background: var(--bad);
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>复平面实验台 · 复变函数 §2.1</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* 本页自带布局样式；颜色一律走 style.css 的 CSS 变量并带兜底值，
+   这样即使 style.css 尚未就位，本页也能正常显示。 */
+.plane-layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr) 350px;
+    gap: 16px;
+    max-width: 1480px;
+    margin: 18px auto;
+    padding: 0 16px;
+    align-items: start;
+}
+
+.plane-main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.plane-side {
+    position: sticky;
+    top: 72px;
+}
+
+@media (max-width: 1240px) {
+    .plane-layout {
+        grid-template-columns: 290px minmax(0, 1fr);
+    }
+
+    .plane-side {
+        grid-column: 1 / -1;
+        position: static;
+    }
+}
+
+@media (max-width: 860px) {
+    .plane-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.plane-field {
+    margin-bottom: 12px;
+}
+
+.plane-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.plane-field input[type="text"] {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--line, #e2e8f0);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: "Cambria Math", Georgia, serif;
+}
+
+.plane-field input[type="text"]:focus {
+    outline: 2px solid #bfdbfe;
+    border-color: var(--brand, #2563eb);
+}
+
+.plane-error {
+    min-height: 16px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--bad, #dc2626);
+}
+
+.plane-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 10px;
+    font-size: 14px;
+}
+
+.plane-check input {
+    width: 16px;
+    height: 16px;
+}
+
+.plane-canvas-box {
+    border: 1px dashed var(--line, #e2e8f0);
+    border-radius: 10px;
+    background: #fafcff;
+    padding: 8px;
+}
+
+.plane-canvas-inner {
+    position: relative;
+}
+
+.plane-canvas-inner canvas {
+    display: block;
+    margin: 0 auto;
+    cursor: crosshair;
+}
+
+.plane-tip {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    max-width: 320px;
+    padding: 4px 9px;
+    font-size: 12px;
+    white-space: nowrap;
+    background: var(--ink, #0f172a);
+    color: #fff;
+    border-radius: 6px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s;
+}
+
+.plane-tip.show {
+    opacity: 1;
+}
+
+.plane-note {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--ink-soft, #475569);
+}
+
+.legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--ink-soft, #475569);
+    margin-top: 8px;
+}
+
+.legend .chip {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: -1px;
+}
+
+.stat-list {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.stat-list th,
+.stat-list td {
+    border-bottom: 1px solid var(--line, #e2e8f0);
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.stat-list th {
+    color: var(--ink-soft, #475569);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.plane-summary {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: var(--ink-soft, #475569);
+}
+
+.plane-formula {
+    font-family: "Cambria Math", Georgia, serif;
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <h1>复平面实验台</h1>
+        <p class="subtitle">复变函数 §2.1 · 复数的几何表示 · 复数运算的图形意义</p>
+    </div>
+    <div class="topbar-right">
+        <a class="viz-link" href="index.html">返回考试页</a>
+    </div>
+</header>
+
+<main class="plane-layout">
+
+    <!-- 输入区 -->
+    <aside class="panel">
+        <h2 class="panel-title">输入复数</h2>
+
+        <div class="plane-field">
+            <label for="z1-input">z₁</label>
+            <input type="text" id="z1-input" value="3+2i" autocomplete="off" spellcheck="false">
+            <div class="plane-error" id="z1-error"></div>
+        </div>
+
+        <div class="plane-field">
+            <label for="z2-input">z₂</label>
+            <input type="text" id="z2-input" value="1+i" autocomplete="off" spellcheck="false">
+            <div class="plane-error" id="z2-error"></div>
+        </div>
+
+        <h2 class="panel-title" style="margin-top:18px;">棣莫弗公式：幂的轨迹</h2>
+        <div class="plane-field">
+            <label for="n-input">n（幂次数，1～12）</label>
+            <input type="text" id="n-input" value="5" autocomplete="off" spellcheck="false">
+            <div class="plane-error" id="n-error"></div>
+        </div>
+
+        <h2 class="panel-title" style="margin-top:18px;">n 次单位根</h2>
+        <div class="plane-field">
+            <label for="m-input">m（单位根个数，1～24）</label>
+            <input type="text" id="m-input" value="6" autocomplete="off" spellcheck="false">
+            <div class="plane-error" id="m-error"></div>
+        </div>
+
+        <h2 class="panel-title" style="margin-top:18px;">乘法几何动画</h2>
+        <label class="plane-check" for="anim-check">
+            <input type="checkbox" id="anim-check">
+            <span>演示乘法几何</span>
+        </label>
+        <button class="btn btn-primary btn-block" id="btn-play" type="button">▶ 播放</button>
+        <p class="plane-note" id="anim-note"></p>
+
+        <p class="plane-note">
+            支持写法：<span class="plane-formula">3+4i、1-i、4i、-i、i、3、-3/2、0.75、
+            √13、2√3、√3/2、√(3/2)、π、π/4、-iπ/2</span>。<br>
+            根式按 <span class="plane-formula">(√d)÷分母</span> 理解；
+            <span class="plane-formula">√(3/2)</span> 表示 <span class="plane-formula">√(3/2)</span>。
+        </p>
+    </aside>
+
+    <!-- 画布区 -->
+    <section class="plane-main">
+
+        <section class="panel">
+            <h2 class="panel-title">复平面：z₁ 与 z₂ 的图形意义</h2>
+            <div class="plane-canvas-box">
+                <div class="plane-canvas-inner" id="main-canvas-box">
+                    <canvas id="main-canvas" aria-label="复平面主画布"></canvas>
+                    <div class="plane-tip" id="main-tip"></div>
+                </div>
+            </div>
+            <div class="legend">
+                <span><span class="chip" style="background:#2563eb;"></span>z₁ 与模半径</span>
+                <span><span class="chip" style="background:#f59e0b;"></span>辐角弧</span>
+                <span><span class="chip" style="background:#d97706;"></span>z₂</span>
+                <span><span class="chip" style="background:#9333ea;"></span>z̄₁（共轭）</span>
+                <span><span class="chip" style="background:#16a34a;"></span>z₁z₂（乘积）</span>
+                <span><span class="chip" style="background:#dc2626;"></span>z₁/z₂（商，空心方块）</span>
+            </div>
+            <p class="plane-note">鼠标悬停任意标注点，可读出该点的代数形式、模与辐角。</p>
+        </section>
+
+        <section class="panel">
+            <h2 class="panel-title">棣莫弗公式：z, z², …, zⁿ 的轨迹</h2>
+            <div class="plane-canvas-box">
+                <div class="plane-canvas-inner" id="pow-canvas-box">
+                    <canvas id="pow-canvas" aria-label="幂的轨迹画布"></canvas>
+                </div>
+            </div>
+            <p class="plane-note" id="pow-note"></p>
+        </section>
+
+        <section class="panel">
+            <h2 class="panel-title">m 次单位根</h2>
+            <div class="plane-canvas-box">
+                <div class="plane-canvas-inner" id="root-canvas-box">
+                    <canvas id="root-canvas" aria-label="单位根画布"></canvas>
+                </div>
+            </div>
+            <p class="plane-note" id="root-note"></p>
+        </section>
+
+    </section>
+
+    <!-- 说明区 -->
+    <aside class="panel plane-side">
+        <h2 class="panel-title">数值说明</h2>
+        <p class="plane-summary" id="summary"></p>
+        <table class="stat-list" id="info-table"></table>
+        <p class="plane-note" id="side-note"></p>
+    </aside>
+
+</main>
+
+<script src="plane.js"></script>
+</body>
+</html>

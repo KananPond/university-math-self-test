@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>线性代数考试模拟卷</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <h1 id="paper-title">线性代数考试模拟卷</h1>
+        <p id="paper-subtitle" class="subtitle"></p>
+    </div>
+    <div class="topbar-right">
+        <a class="viz-link" href="viz.html">矩阵可视化实验台</a>
+        <div class="service-state" id="service-state" title="本地判分服务状态">
+            <span class="dot"></span><span class="text">检测中…</span>
+        </div>
+        <div class="timer" id="timer">--:--</div>
+        <button class="btn btn-primary" id="btn-submit" type="button">交卷评分</button>
+    </div>
+</header>
+
+<div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+
+<main class="layout">
+    <aside class="sidebar">
+        <section class="panel score-panel" id="score-panel">
+            <div class="score-value" id="score-value">--</div>
+            <div class="score-label">实时得分 · 满分 100 分</div>
+            <div class="score-sub" id="score-sub">尚未开始考试</div>
+        </section>
+
+        <section class="panel">
+            <h2 class="panel-title">答题进度</h2>
+            <div class="progress-text" id="progress-text">已答 0 / 0 题</div>
+            <div class="progress-track thin"><div class="progress-fill" id="progress-fill-side"></div></div>
+        </section>
+
+        <nav class="panel nav-panel">
+            <h2 class="panel-title">题目导航</h2>
+            <div id="nav"></div>
+        </nav>
+
+        <section class="panel">
+            <h2 class="panel-title">考试操作</h2>
+            <button class="btn btn-block" id="btn-save" type="button">保存答题记录</button>
+            <button class="btn btn-block" id="btn-newpaper" type="button">重新抽一套题</button>
+            <p class="hint" id="save-hint"></p>
+        </section>
+    </aside>
+
+    <section class="paper">
+        <section class="panel notice" id="notice">
+            <h2 class="panel-title">考生须知</h2>
+            <ol id="instructions"></ol>
+        </section>
+        <div id="paper-body" class="paper-body"></div>
+    </section>
+</main>
+
+<div class="modal-mask" id="modal-mask" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <header class="modal-head">
+            <h2 id="modal-title">模拟考试成绩单</h2>
+            <button class="modal-close" id="btn-close-modal" type="button" aria-label="关闭">×</button>
+        </header>
+        <div class="modal-body">
+            <div class="result-hero">
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-total" id="result-total">/ 100 分</div>
+                <div class="result-comment" id="result-comment"></div>
+            </div>
+            <table class="result-table" id="result-table"></table>
+        </div>
+        <footer class="modal-foot">
+            <button class="btn btn-primary" id="btn-save-in-modal" type="button">保存答题记录</button>
+            <button class="btn" id="btn-close-modal2" type="button">关闭</button>
+        </footer>
+    </div>
+</div>
+
+<footer class="footer-note">
+    本工具面向个人自测与练习 · 本地运行，不出外网 ·
+    题面矩阵均为 canvas 图形渲染，悬停可查看元素
+</footer>
+
+<script src="matrix.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

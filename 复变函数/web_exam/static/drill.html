@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>闪电训练 · 复变函数 §2.1</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <h1>闪电训练 · 复数基础肌肉记忆</h1>
+        <p class="subtitle">答错立刻重做，答对才算过 · 按知识点自动加权</p>
+    </div>
+    <div class="topbar-right">
+        <a class="viz-link" href="index.html">返回模拟卷</a>
+        <a class="viz-link" href="plane.html">复平面实验台</a>
+        <div class="service-state" id="service-state" title="本地判分服务状态">
+            <span class="dot"></span><span class="text">检测中…</span>
+        </div>
+    </div>
+</header>
+
+<main class="drill-layout">
+    <aside class="sidebar">
+        <section class="panel">
+            <h2 class="panel-title">本轮统计</h2>
+            <div class="drill-stats">
+                <div class="drill-stat">
+                    <div class="num" id="stat-done">0</div>
+                    <div class="cap">已练题数</div>
+                </div>
+                <div class="drill-stat">
+                    <div class="num" id="stat-right">0</div>
+                    <div class="cap">答对次数</div>
+                </div>
+                <div class="drill-stat">
+                    <div class="num" id="stat-wrong">0</div>
+                    <div class="cap">答错次数</div>
+                </div>
+                <div class="drill-stat">
+                    <div class="num streak" id="stat-streak">0</div>
+                    <div class="cap">连续答对</div>
+                </div>
+            </div>
+            <div class="qmark-row" id="qmark-row"></div>
+            <p class="hint" id="session-hint"></p>
+        </section>
+
+        <section class="panel">
+            <h2 class="panel-title">训练知识点</h2>
+            <div class="kp-chips" id="kp-chips"></div>
+            <div style="margin-top:12px">
+                <button class="btn btn-block" id="btn-start" type="button">开始一轮训练</button>
+                <button class="btn btn-block" id="btn-wrong-mode" type="button">只练错题本</button>
+            </div>
+            <p class="hint" id="wrongbook-hint"></p>
+        </section>
+
+        <section class="panel">
+            <h2 class="panel-title">掌握度</h2>
+            <div id="mastery-list"></div>
+            <p class="hint">掌握度按「本知识点最近一轮的正确率」升降，
+                越低的知识点下一轮出题越多。</p>
+        </section>
+    </aside>
+
+    <section class="paper">
+        <div class="drill-card" id="drill-card">
+            <div class="drill-stem" id="drill-stem">正在准备训练题……</div>
+            <div class="drill-figure" id="drill-figure"></div>
+            <div id="drill-input"></div>
+            <div class="drill-actions" id="drill-actions"></div>
+            <div id="drill-feedback"></div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer-note">
+    闪电训练把「复数的表示与运算」拆成随机小题反复练 ·
+    答案由服务端精确判分，写法支持 3+4i、√13、π/4 等
+</footer>
+
+<script src="complex.js"></script>
+<script src="drill.js"></script>
+</body>
+</html>
